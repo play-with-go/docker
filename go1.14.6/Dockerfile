@@ -1,4 +1,4 @@
-FROM golang@sha256:4d58164df51901679307e547ffed19837e63a1d1b9ed80453b8d88749b6033f4
+FROM sha256:a794da9351a3b2f860cc9d8859f75c7722ea0eb3d482ceac2c44e20780743018
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod 755 /usr/bin/entrypoint.sh
 RUN chown root:root /usr/bin/entrypoint.sh
