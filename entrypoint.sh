@@ -6,7 +6,11 @@ then
 fi
 
 # Pick up any mounted CA certs, e.g. mkcert. But don't be noisy about it
-update-ca-certificates > /dev/null 2>&1
+if [ "${PLAYWITHGO_ROOTCA:-}" != "" ]
+then
+	echo "$PLAYWITHGO_ROOTCA" > /usr/local/share/ca-certificates/playwithgo_rootca.crt
+	update-ca-certificates > /dev/null 2>&1
+fi
 
 if [ "${PLAYWITHGO_NOGOPHER:-}" != "true" ]
 then
