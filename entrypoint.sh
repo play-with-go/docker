@@ -26,6 +26,11 @@ EOD
 		  email = gopher@gopher.com
 		  name = Random Gopher
 EOD
+	cat <<EOD >> /home/gopher/.netrc
+machine play-with-go.dev
+username $GITEA_USERNAME
+password $GITEA_PASSWORD
+EOD
 	cd /home/gopher
 	export HOME=/home/gopher
 	exec setpriv --reuid gopher --regid gopher --init-groups "$@"
