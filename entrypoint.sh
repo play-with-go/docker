@@ -30,9 +30,12 @@ EOD
 EOD
 	cat <<EOD >> /home/gopher/.netrc
 machine play-with-go.dev
-username $GITEA_USERNAME
+login $GITEA_USERNAME
 password $GITEA_PASSWORD
+
 EOD
+	chown gopher:gopher /home/gopher/.netrc
+	chmod 600 /home/gopher/.netrc
 	cd /home/gopher
 	export HOME=/home/gopher
 	exec setpriv --reuid gopher --regid gopher --init-groups "$@"
