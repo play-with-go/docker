@@ -1,4 +1,4 @@
-FROM sha256:75605a4155391abe376fc8124083ec52a2409ceb8a6b5ac6aae7eca133353ce3
+FROM golang@sha256:46b35fa37b05cbf653680cc472ee81c06f5291357fea0af475419c2f48e06b6f
 
 # Latest git
 RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu groovy main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
