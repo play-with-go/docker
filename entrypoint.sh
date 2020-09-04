@@ -25,6 +25,8 @@ EOD
 [user]
 		  email = gopher@gopher.com
 		  name = Random Gopher
+[init]
+		  defaultBranch = main
 EOD
 	cat <<EOD >> /home/gopher/.netrc
 machine play-with-go.dev
