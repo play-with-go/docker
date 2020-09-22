@@ -33,7 +33,7 @@ EOD
 	if [ "${GITEA_USERNAME:-}" != "" ] && [ "${GITEA_PASSWORD:-}" != "" ]
 	then
 		cat <<EOD >> /home/gopher/.netrc
-machine play-with-go.dev
+machine gopher.live
 login $GITEA_USERNAME
 password $GITEA_PASSWORD
 
