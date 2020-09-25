@@ -8,9 +8,9 @@ then
 fi
 
 # Pick up any mounted CA certs, e.g. mkcert. But don't be noisy about it
-if [ "${PLAYWITHGO_ROOTCA:-}" != "" ]
+if [ "${GOPHERLIVE_ROOTCA:-}" != "" ]
 then
-	echo "$PLAYWITHGO_ROOTCA" > /usr/local/share/ca-certificates/playwithgo_rootca.crt
+	echo "$GOPHERLIVE_ROOTCA" > /usr/local/share/ca-certificates/playwithgo_rootca.crt
 	update-ca-certificates > /dev/null 2>&1
 fi
 
@@ -45,5 +45,5 @@ EOD
 	export HOME=/home/gopher
 	exec setpriv --reuid gopher --regid gopher --init-groups "$@"
 else
-	"$@"
+	exec "$@"
 fi
