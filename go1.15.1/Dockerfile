@@ -12,7 +12,6 @@ RUN apt-get -y autoremove && \
   apt-get clean
 
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
-RUN chmod 755 /usr/bin/entrypoint.sh
 RUN chown root:root /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
