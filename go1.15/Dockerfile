@@ -5,14 +5,17 @@ RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu groovy main" > /etc/a
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A1715D88E1DF1F24 && \
   apt-get update && \
   apt-get update && \
-  apt-get -y install git=1:2.28.0-0ppa1~ubuntu20.10.1
+  apt-get -y install git=1:2.28.0-0ppa1~ubuntu20.10.1 && \
+  groupadd -r -g 1000 gopher && \
+  useradd -s /bin/bash -u 1000 -m --no-log-init -r -g gopher gopher
 
 # Clean up
 RUN apt-get -y autoremove && \
   apt-get clean
 
+USER gopher
+
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
-RUN chown root:root /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 # By default, run bash endlessly. This can be overriden by providing an
