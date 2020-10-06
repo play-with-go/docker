@@ -13,7 +13,7 @@ RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu groovy main" > /etc/a
 RUN apt-get -y autoremove && \
   apt-get clean
 
-USER gopher
+USER 1000
 
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
