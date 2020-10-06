@@ -1,0 +1,5 @@
+[user]
+		  email = gopher@gopher.com
+		  name = Random Gopher
+[init]
+		  defaultBranch = main
