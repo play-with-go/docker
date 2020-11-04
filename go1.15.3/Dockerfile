@@ -1,12 +1,11 @@
-# golang:1.15.2
-FROM golang@sha256:da7ff43658854148b401f24075c0aa390e3b52187ab67cab0043f2b15e754a68
+# golang:1.15.3
+FROM golang@sha256:1ba0da74b20aad52b091877b0e0ece503c563f39e37aa6b0e46777c4d820a2ae
 
 # Latest git
-RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu groovy main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
+RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A1715D88E1DF1F24 && \
   apt-get update && \
-  apt-get update && \
-  apt-get -y install git=1:2.28.0-0ppa1~ubuntu20.10.1
+  apt-get -y install git=1:2.29.2-0ppa1~ubuntu20.04.1
 
 RUN apt-get -y install sudo
 
