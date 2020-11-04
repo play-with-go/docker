@@ -30,6 +30,9 @@ RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig && \
 
 USER 1000
 
+# Do not set GOPATH
+ENV GOPATH=
+
 # By default, run bash endlessly. This can be overriden by providing an
 # alternative command at runtime
 CMD while true ; do /bin/bash; done
