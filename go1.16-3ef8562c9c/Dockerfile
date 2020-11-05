@@ -1,7 +1,46 @@
 # syntax = docker/dockerfile:experimental@sha256:de85b2f3a3e8a2f7fe48e8e84a65f6fdd5cd5183afa6412fff9caa6871649c44
 
-# golang:1.15.3
-FROM golang@sha256:1ba0da74b20aad52b091877b0e0ece503c563f39e37aa6b0e46777c4d820a2ae
+# golang:1.15.2
+FROM golang@sha256:da7ff43658854148b401f24075c0aa390e3b52187ab67cab0043f2b15e754a68 AS stage1
+
+ENV GOCACHE=/root/.cache/go/gocache
+ENV GOMODCACHE=/root/.cache/go/gomodcache
+ENV CGO_ENABLED=0
+ENV GOPATH=
+
+ENV PATH /gobuild/bin:$PATH
+
+RUN set -eux; \
+  mkdir /gobuild; \
+  cd /gobuild; \
+  git init; \
+  git remote add origin https://go.googlesource.com/go; \
+  git fetch origin 3ef8562c9c2c7f6897572b05b70ac936a99fd043; \
+  git checkout FETCH_HEAD;
+
+RUN --mount=type=cache,target=/root/.cache/go set -eux; \
+  cd /gobuild/src; \
+  ./make.bash; \
+  go version; \
+  go install std;
+
+RUN set -eux; \
+  rm -rf \
+   /gobuild/pkg/*/cmd \
+   /gobuild/pkg/bootstrap \
+   /gobuild/pkg/obj \
+   /gobuild/pkg/tool/*/api \
+   /gobuild/pkg/tool/*/go_bootstrap \
+   /gobuild/src/cmd/dist/dist \
+   /gobuild/.git \
+  ;
+
+# buildpack-deps:buster-scm
+FROM buildpack-deps@sha256:f010c9887ecea10d052247ef8befb79c2d17ea3f92ab6cb05039caab757fb14e
+
+ENV PATH /usr/local/go/bin:$PATH
+
+COPY --from=stage1 /gobuild /usr/local/go
 
 # Latest git
 RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
