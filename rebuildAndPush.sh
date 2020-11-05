@@ -3,6 +3,9 @@
 set -euo pipefail
 shopt -s inherit_errexit
 
+export COMPOSE_DOCKER_CLI_BUILD=1
+export DOCKER_BUILDKIT=1
+
 push=true
 
 while getopts ":b" opt; do
