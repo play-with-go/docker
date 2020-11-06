@@ -71,8 +71,9 @@ RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig && \
 
 USER 1000
 
-# Do not set GOPATH
+# Image environment
 ENV GOPATH=
+ENV GOMAXPROCS=1
 
 # By default, run bash endlessly. This can be overriden by providing an
 # alternative command at runtime
