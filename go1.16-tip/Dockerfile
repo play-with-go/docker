@@ -15,7 +15,7 @@ RUN set -eux; \
   cd /gobuild; \
   git init; \
   git remote add origin https://go.googlesource.com/go; \
-  git fetch origin 3ef8562c9c2c7f6897572b05b70ac936a99fd043; \
+  git fetch origin 7307e86afda3c5c7f6158d2469c39606fd1dba65; \
   git checkout FETCH_HEAD;
 
 RUN --mount=type=cache,target=/root/.cache/go set -eux; \
