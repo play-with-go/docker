@@ -27,18 +27,20 @@ RUN groupadd -r -g 1000 gopher && \
   usermod -aG sudo gopher && \
   echo "gopher ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-COPY bashrc /home/gopher/.bashrc
-COPY gitconfig /home/gopher/.gitconfig
-
-RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig && \
-  chmod 600 /home/gopher/.bashrc /home/gopher/.gitconfig
-
-USER 1000
-
 # Image environment
+ENV PATH=/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV GOPATH=
 ENV GOMAXPROCS=1
 
+COPY profile /home/gopher/.profile
+COPY bashrc /home/gopher/.bashrc
+COPY gitconfig /home/gopher/.gitconfig
+
+RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile && \
+  chmod 600 /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile
+
+USER 1000
+
 # By default, run bash endlessly. This can be overriden by providing an
 # alternative command at runtime
-CMD while true ; do /bin/bash; done
+CMD while true ; do /bin/bash -l; done
