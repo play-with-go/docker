@@ -1,0 +1,40 @@
+# syntax = docker/dockerfile:experimental@sha256:de85b2f3a3e8a2f7fe48e8e84a65f6fdd5cd5183afa6412fff9caa6871649c44
+
+# buildpack-deps:buster-scm, base of golang:1.15.3
+FROM buildpack-deps@sha256:f010c9887ecea10d052247ef8befb79c2d17ea3f92ab6cb05039caab757fb14e
+
+RUN apt-get update && apt-get -y install sudo
+
+# Clean up
+RUN apt-get -y autoremove && \
+  apt-get clean
+
+# Remove extraneous stuff
+RUN apt-get -y --allow-remove-essential remove curl apt
+
+COPY ./entrypoint.sh /usr/bin/entrypoint.sh
+RUN chown root:root /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+
+RUN groupadd -r -g 1000 gopher && \
+  useradd -s /bin/bash -u 1000 -m --no-log-init -r -g gopher gopher && \
+  usermod -aG sudo gopher && \
+  echo "gopher ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Image environment
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV GOPATH=
+ENV GOMAXPROCS=1
+
+COPY profile_empty /home/gopher/.profile
+COPY bashrc /home/gopher/.bashrc
+COPY gitconfig /home/gopher/.gitconfig
+
+RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile && \
+  chmod 600 /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile
+
+USER 1000
+
+# By default, run bash endlessly. This can be overriden by providing an
+# alternative command at runtime
+CMD while true ; do /bin/bash -l; done
