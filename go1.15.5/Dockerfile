@@ -15,6 +15,9 @@ RUN apt-get -y install sudo
 RUN apt-get -y autoremove && \
   apt-get clean
 
+# Remove extraneous stuff
+RUN apt-get -y --allow-remove-essential remove curl wget apt
+
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN chown root:root /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
