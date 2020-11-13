@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:experimental@sha256:de85b2f3a3e8a2f7fe48e8e84a65f6fdd5cd5183afa6412fff9caa6871649c44
 
-# golang:1.15.3
-FROM golang@sha256:1ba0da74b20aad52b091877b0e0ece503c563f39e37aa6b0e46777c4d820a2ae
+# golang:1.15.5
+FROM golang@sha256:7ca7ffe692fa0fb6a142d4bdf5c28b6d7b3e32dc9a25eea9596ae1935135d7eb
 
 # Latest git
 RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
