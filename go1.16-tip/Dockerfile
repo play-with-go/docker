@@ -71,12 +71,16 @@ ENV PATH=/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 ENV GOPATH=
 ENV GOMAXPROCS=1
 
+RUN mkdir /home/gopher/.ssh
+
 COPY profile /home/gopher/.profile
 COPY bashrc /home/gopher/.bashrc
 COPY gitconfig /home/gopher/.gitconfig
+COPY sshconfig /home/gopher/.ssh/config
 
-RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile && \
-  chmod 600 /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile
+RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile /home/gopher/.ssh /home/gopher/.ssh/config && \
+  chmod 600 /home/gopher/.bashrc /home/gopher/.gitconfig /home/gopher/.profile /home/gopher/.ssh/config && \
+  chmod 700 /home/gopher/.ssh
 
 USER 1000
 
