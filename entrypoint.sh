@@ -21,18 +21,16 @@ then
 	sudo update-ca-certificates > /dev/null 2>&1
 fi
 
-# Otherwise, we are root and expected to ultimately exec as gopher.
-# Do some environment setup then exec as gopher
-if [ "${GITEA_USERNAME:-}" != "" ] && [ "${GITEA_PASSWORD:-}" != "" ]
+if [ "${GITEA_PRIV_KEY:-}" != "" ] && [ "${GITEA_PUB_KEY:-}" != "" ] && [ "${GITEA_KEYSCAN:-}" != "" ]
 then
-	cat <<EOD >> /home/gopher/.netrc
-machine gopher.live
-login $GITEA_USERNAME
-password $GITEA_PASSWORD
+	echo "$GITEA_PRIV_KEY" > /home/gopher/.ssh/id_ed25519
+	echo "$GITEA_PUB_KEY" > /home/gopher/.ssh/id_ed25519.pub
+	echo "$GITEA_KEYSCAN" > /home/gopher/.ssh/known_hosts
+	chmod 600 /home/gopher/.ssh/*
 
-EOD
-	chmod 600 /home/gopher/.netrc
+	git config --global url.ssh://git@gopher.live/.insteadOf https://gopher.live/
 fi
+
 cd /home/gopher
 export HOME=/home/gopher
 exec "$@"
