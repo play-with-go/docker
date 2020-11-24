@@ -3,7 +3,7 @@
 # buildpack-deps:buster-scm, base of golang:1.15.3
 FROM buildpack-deps@sha256:f010c9887ecea10d052247ef8befb79c2d17ea3f92ab6cb05039caab757fb14e
 
-RUN apt-get update && apt-get -y install sudo
+RUN apt-get update && apt-get -y install sudo vim nano
 
 # Clean up
 RUN apt-get -y autoremove && \
