@@ -9,7 +9,7 @@ RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/ap
   apt-get update && \
   apt-get -y install git=1:2.29.2-0ppa1~ubuntu20.04.1
 
-RUN apt-get -y install sudo
+RUN apt-get -y install sudo vim nano
 
 # Clean up
 RUN apt-get -y autoremove && \
