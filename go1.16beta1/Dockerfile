@@ -4,8 +4,8 @@
 # The comment regarding the syntax reference is not at the top of the file
 # because the syntax line must be the first in the file.
 
-# golang:1.15.5
-FROM golang@sha256:7ca7ffe692fa0fb6a142d4bdf5c28b6d7b3e32dc9a25eea9596ae1935135d7eb
+# golang:1.16beta1
+FROM golang@sha256:d38aa153aeeac76d78df581e40120d68afa28ea03d053c011ecef7084de72774
 
 # Latest git
 #

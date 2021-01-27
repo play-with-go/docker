@@ -4,8 +4,8 @@
 # The comment regarding the syntax reference is not at the top of the file
 # because the syntax line must be the first in the file.
 
-# buildpack-deps:buster-scm, base of golang:1.15.3
-FROM buildpack-deps@sha256:f010c9887ecea10d052247ef8befb79c2d17ea3f92ab6cb05039caab757fb14e
+# buildpack-deps:buster-scm, base of golang:1.15.7
+FROM buildpack-deps@sha256:ee317caf2a0127cd352e39b33adbc0d97ffefab7fb949325688cb88cd162e183
 
 RUN apt-get update && apt-get -y install sudo vim nano
 
