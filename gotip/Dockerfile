@@ -4,8 +4,8 @@
 # The comment regarding the syntax reference is not at the top of the file
 # because the syntax line must be the first in the file.
 
-# golang:1.15.2
-FROM golang@sha256:da7ff43658854148b401f24075c0aa390e3b52187ab67cab0043f2b15e754a68 AS stage1
+# golang:1.15.7
+FROM golang@sha256:c161abf0cde3969e05f6914a86cab804b2b0df515f4ff9570475b25547ba7959 AS stage1
 
 ENV GOCACHE=/root/.cache/go/gocache
 ENV GOMODCACHE=/root/.cache/go/gomodcache
@@ -19,7 +19,7 @@ RUN set -eux; \
   cd /gobuild; \
   git init; \
   git remote add origin https://go.googlesource.com/go; \
-  git fetch origin 7307e86afda3c5c7f6158d2469c39606fd1dba65; \
+  git fetch origin cd176b361591420f84fcbcaaf0cf24351aed0995; \
   git checkout FETCH_HEAD;
 
 RUN --mount=type=cache,target=/root/.cache/go set -eux; \
