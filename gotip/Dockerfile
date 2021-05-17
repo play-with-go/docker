@@ -52,7 +52,7 @@ COPY --from=stage1 /gobuild /usr/local/go
 RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A1715D88E1DF1F24 && \
   apt-get update && \
-  apt-get -y install git=1:2.30.0-0ppa1~ubuntu20.04.1
+  apt-get -y install git=1:2.31.1-0ppa1~ubuntu20.04.1
 
 RUN apt-get -y install sudo vim nano
 
