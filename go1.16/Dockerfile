@@ -10,10 +10,9 @@ FROM golang@sha256:f3f90f4d30866c1bdae90012b506bd5e557ce27ccd2510ed30a011c44c1af
 # Latest git
 #
 # TODO: use of the PPA like this is flakey. Move to a better solution.
-RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-groovy.list && \
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A1715D88E1DF1F24 && \
+RUN echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/sources.list && \
   apt-get update && \
-  apt-get -y install git=1:2.31.1-0ppa1~ubuntu20.04.1
+  apt-get -y install git=1:2.30.2-1~bpo10+1 git-man=1:2.30.2-1~bpo10+1
 
 RUN apt-get -y install sudo vim nano
 
