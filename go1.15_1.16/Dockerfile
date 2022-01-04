@@ -1,13 +1,5 @@
-# syntax = docker/dockerfile@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
-# SHA256 above is an absolute reference to docker/dockerfile:1.2.1
-
-# The comment regarding the syntax reference is not at the top of the file
-# because the syntax line must be the first in the file.
-
-# golang:1.15.8
-FROM golang@sha256:9fdb74150f8d8b07ee4b65a4f00ca007e5ede5481fa06e9fd33710890a624331
-
-
+# golang:1.15.15
+FROM golang@sha256:ea080cc817b02a946461d42c02891bf750e3916c52f7ea8187bccde8f312b59f
 
 # Latest git
 #
@@ -52,9 +44,9 @@ RUN chown gopher:gopher /home/gopher/.bashrc /home/gopher/.gitconfig /home/gophe
 
 USER 1000
 
-RUN go get golang.org/dl/go1.16.3 && \
-    /home/gopher/go/bin/go1.16.3 download && \
-    ln -s /home/gopher/sdk/go1.16.3/bin/go /home/gopher/bin/go116 && \
+RUN go get golang.org/dl/go1.16.15 && \
+    /home/gopher/go/bin/go1.16.15 download && \
+    ln -s /home/gopher/sdk/go1.16.15/bin/go /home/gopher/bin/go116 && \
     ln -s /usr/local/go/bin/go /home/gopher/bin/go115 && \
     rm -rf /home/gopher/go/src/golang.org/dl
 

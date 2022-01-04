@@ -1,11 +1,5 @@
-# syntax = docker/dockerfile@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
-# SHA256 above is an absolute reference to docker/dockerfile:1.2.1
-
-# The comment regarding the syntax reference is not at the top of the file
-# because the syntax line must be the first in the file.
-
-# buildpack-deps:buster-scm, base of golang:1.15.8
-FROM buildpack-deps@sha256:67ad07dd937bd85df686b5a02dc3bf27746645d397505b317e06ee56ac29b87d
+# buildpack-deps:buster-scm, base of golang:1.15.15
+FROM buildpack-deps@sha256:07e999f2b4c56d4a9e8e5be86f2e2d865c22e6786e0322f7316bef4a3f65765f
 
 RUN apt-get update && apt-get -y install sudo vim nano
 

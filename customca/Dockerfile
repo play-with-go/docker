@@ -1,5 +1,5 @@
-# alpine:atest
-FROM alpine@sha256:185518070891758909c9f839cf4ca393ee977ac378609f700f60a771a2dfe321
+# alpine
+FROM alpine@sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118285c70fa8c9300
 
 RUN apk add --no-cache ca-certificates
 
