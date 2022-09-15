@@ -1,50 +1,5 @@
-# syntax = docker/dockerfile@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
-# SHA256 above is an absolute reference to docker/dockerfile:1.2.1
-
-# The comment regarding the syntax reference is not at the top of the file
-# because the syntax line must be the first in the file.
-
-# golang:1.15.7
-FROM golang@sha256:c161abf0cde3969e05f6914a86cab804b2b0df515f4ff9570475b25547ba7959 AS stage1
-
-ENV GOCACHE=/root/.cache/go/gocache
-ENV GOMODCACHE=/root/.cache/go/gomodcache
-ENV CGO_ENABLED=0
-ENV GOPATH=
-
-ENV PATH /gobuild/bin:$PATH
-
-RUN set -eux; \
-  mkdir /gobuild; \
-  cd /gobuild; \
-  git init; \
-  git remote add origin https://go.googlesource.com/go; \
-  git fetch origin cd176b361591420f84fcbcaaf0cf24351aed0995; \
-  git checkout FETCH_HEAD;
-
-RUN --mount=type=cache,target=/root/.cache/go set -eux; \
-  cd /gobuild/src; \
-  ./make.bash; \
-  go version; \
-  go install std;
-
-RUN set -eux; \
-  rm -rf \
-   /gobuild/pkg/*/cmd \
-   /gobuild/pkg/bootstrap \
-   /gobuild/pkg/obj \
-   /gobuild/pkg/tool/*/api \
-   /gobuild/pkg/tool/*/go_bootstrap \
-   /gobuild/src/cmd/dist/dist \
-   /gobuild/.git \
-  ;
-
-# buildpack-deps:buster-scm
-FROM buildpack-deps@sha256:f010c9887ecea10d052247ef8befb79c2d17ea3f92ab6cb05039caab757fb14e
-
-ENV PATH /usr/local/go/bin:$PATH
-
-COPY --from=stage1 /gobuild /usr/local/go
+# golang:1.15.15
+FROM golang@sha256:ea080cc817b02a946461d42c02891bf750e3916c52f7ea8187bccde8f312b59f
 
 # Latest git
 #

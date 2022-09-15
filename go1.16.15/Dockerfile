@@ -1,20 +1,7 @@
-# syntax = docker/dockerfile@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
-# SHA256 above is an absolute reference to docker/dockerfile:1.2.1
+# golang:1.16.15
+FROM golang@sha256:5f6a4662de3efc6d6bb812d02e9de3d8698eea16b8eb7281f03e6f3e8383018e
 
-# The comment regarding the syntax reference is not at the top of the file
-# because the syntax line must be the first in the file.
-
-# golang:1.16
-FROM golang@sha256:f3f90f4d30866c1bdae90012b506bd5e557ce27ccd2510ed30a011c44c1affc8
-
-# Latest git
-#
-# TODO: use of the PPA like this is flakey. Move to a better solution.
-RUN echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/sources.list && \
-  apt-get update && \
-  apt-get -y install git=1:2.30.2-1~bpo10+1 git-man=1:2.30.2-1~bpo10+1
-
-RUN apt-get -y install sudo vim nano
+RUN apt-get update && apt-get -y install sudo vim nano
 
 # Clean up
 RUN apt-get -y autoremove && \
