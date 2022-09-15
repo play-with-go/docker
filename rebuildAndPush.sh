@@ -6,12 +6,19 @@ shopt -s inherit_errexit
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
+if ! test -z "$(git status --porcelain)"
+then
+	echo "git working tree is not clean"
+	exit 1
+fi
+
+tag=""
 pushOrLoad="--push"
 platform="linux/amd64,linux/arm64"
 optb=false
 optl=false
 
-while getopts ":bl" opt; do
+while getopts ":blt" opt; do
   case $opt in
     b)
 		optb=true
@@ -21,6 +28,9 @@ while getopts ":bl" opt; do
 		optl=true
       pushOrLoad="--load"
 		platform="$(go env GOOS)/$(go env GOARCH)"
+      ;;
+	t)
+		tag=":$(git rev-parse HEAD)"
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -46,7 +56,7 @@ fi
 for i in $files
 do
 	i=$(dirname $i)
-	cmd="docker buildx build $pushOrLoad -t playwithgo/$i --platform $platform -f $i/Dockerfile ."
+	cmd="docker buildx build $pushOrLoad -t playwithgo/$i$tag --platform $platform -f $i/Dockerfile ."
 	echo "Running: $cmd"
 	$cmd
 done

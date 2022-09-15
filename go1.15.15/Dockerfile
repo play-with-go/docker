@@ -8,7 +8,7 @@ RUN echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/so
   apt-get update && \
   apt-get -y install git=1:2.30.2-1~bpo10+1 git-man=1:2.30.2-1~bpo10+1
 
-RUN apt-get -y install sudo vim nano
+RUN apt-get update && apt-get -y install sudo vim nano
 
 # Clean up
 RUN apt-get -y autoremove && \
