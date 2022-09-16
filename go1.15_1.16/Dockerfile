@@ -17,10 +17,6 @@ RUN apt-get -y autoremove && \
 # Remove extraneous stuff
 RUN apt-get -y --allow-remove-essential remove curl wget apt
 
-COPY ./entrypoint.sh /usr/bin/entrypoint.sh
-RUN chown root:root /usr/bin/entrypoint.sh
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-
 RUN groupadd -r -g 1000 gopher && \
   useradd -s /bin/bash -u 1000 -m --no-log-init -r -g gopher gopher && \
   usermod -aG sudo gopher && \
@@ -49,6 +45,10 @@ RUN go get golang.org/dl/go1.16.15 && \
     ln -s /home/gopher/sdk/go1.16.15/bin/go /home/gopher/bin/go116 && \
     ln -s /usr/local/go/bin/go /home/gopher/bin/go115 && \
     rm -rf /home/gopher/go/src/golang.org/dl
+
+COPY ./entrypoint.sh /usr/bin/entrypoint.sh
+RUN sudo chown root:root /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 # By default, run bash endlessly. This can be overriden by providing an
 # alternative command at runtime

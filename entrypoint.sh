@@ -4,7 +4,7 @@ set -eu
 
 if [ "$#" -eq 0 ]
 then
-  exit
+	exit
 fi
 
 # If we are not root, or we have explicitly disabled doing anything to the
@@ -30,6 +30,14 @@ then
 
 	git config --global url.ssh://git@gopher.live/.insteadOf https://gopher.live/
 fi
+
+# Set GOARCH to bootstrap installing Go
+case $(uname -m) in
+	x86_64|amd64)
+		export GOARCH="amd64";;
+	aarch64|arm64)
+		export GOARCH="arm64";;
+esac
 
 cd /home/gopher
 export HOME=/home/gopher
