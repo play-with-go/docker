@@ -6,19 +6,13 @@ shopt -s inherit_errexit
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
-if ! test -z "$(git status --porcelain)"
-then
-	echo "git working tree is not clean"
-	exit 1
-fi
-
 tag=""
 pushOrLoad="--push"
 platform="linux/amd64,linux/arm64"
 optb=false
 optl=false
 
-while getopts ":blt" opt; do
+while getopts ":bl" opt; do
   case $opt in
     b)
 		optb=true
@@ -29,9 +23,6 @@ while getopts ":blt" opt; do
       pushOrLoad="--load"
 		platform="$(go env GOOS)/$(go env GOARCH)"
       ;;
-	t)
-		tag=":$(git rev-parse HEAD)"
-      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       ;;
@@ -39,10 +30,22 @@ while getopts ":blt" opt; do
 done
 shift $(($OPTIND - 1))
 
+# -b and -l are mutually exclusive
 if $optb && $optl
 then
 	echo "cannot specify -b and -l"
 	exit 1
+fi
+
+# if neither -b nor -l specified, tag
+if ! $optb && ! $optl
+then
+	if ! test -z "$(git status --porcelain)"
+	then
+		echo "git working tree is not clean; cannot tag and push"
+		exit 1
+	fi
+	tag=":$(git rev-parse HEAD)"
 fi
 
 command cd "$( command cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
